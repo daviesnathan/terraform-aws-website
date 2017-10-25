@@ -1,0 +1,4 @@
+*.config
+*.terraform
+*.tfstate
+*.tfstate.backup
