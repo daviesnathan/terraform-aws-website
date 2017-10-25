@@ -8,7 +8,7 @@ resource "aws_s3_bucket" "s3_remote_state_bucket" {
 
     tags {
       Name        = "terraform-aws-remote-state"
-      Environment = "ndaviesio_infrastructure"
+      Environment = "Management"
       Owner       = "${var.owner}"
     }
 }

@@ -11,3 +11,9 @@ variable "owner" {
 }
 
 provider "aws" {}
+
+module "cloudfront" {
+  dns_zone = "Z2TMUMYK9QCMW0"
+  owner = "${var.owner}"
+  source   = "./cloudfront"
+}
