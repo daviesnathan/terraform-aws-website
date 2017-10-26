@@ -1,4 +1,10 @@
 /*
+  Define CloudFront Origin Access Identity
+*/
+resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
+  comment = "access-identity-static-source-ndavies-io.s3.amazonaws.com"
+}
+/*
   Define CloudFront Distribution
   Alias: www.ndavies.io, ndavies.io
 */
@@ -6,6 +12,10 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
   origin {
     domain_name = "${aws_s3_bucket.source.bucket_domain_name}"
     origin_id   = "static-source-ndavies-io"
+
+    s3_origin_config {
+      origin_access_identity = "${aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path}"
+    }
   }
 
   enabled             = true
@@ -13,12 +23,13 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
   comment             = "ndavies.io Static Frontend Distribution"
   default_root_object = "index.html"
 
-  aliases = ["www.ndavies.io", "ndavies.io"]
+  aliases = ["ndavies.io"]
 
   default_cache_behavior {
-    allowed_methods   = ["GET", "HEAD", "OPTIONS"]
-    cached_methods    = ["GET", "HEAD"]
-    target_origin_id  = "static-source-ndavies-io"
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = "static-source-ndavies-io"
+    viewer_protocol_policy = "redirect-to-https"
 
     forwarded_values {
       query_string = false
@@ -28,10 +39,10 @@ resource "aws_cloudfront_distribution" "cf_distribution" {
       }
     }
 
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
     min_ttl                = 0
     default_ttl            = 60
-    max_ttl                = 86400
+    max_ttl                = 60
   }
 
   restrictions {

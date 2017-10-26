@@ -15,6 +15,6 @@ provider "aws" {
 data "aws_acm_certificate" "cert" {
   provider = "aws.useast"
 
-  domain   = "*.ndavies.io"
+  domain   = "ndavies.io"
   statuses = ["ISSUED"]
 }
