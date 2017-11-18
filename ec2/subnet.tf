@@ -1,5 +1,5 @@
 /*
-  main VPC subnet
+  main_subnet
   10.0.1.0/24
 */
 resource "aws_subnet" "main" {
@@ -11,4 +11,13 @@ resource "aws_subnet" "main" {
     Environment = "Production"
     Owner = "${var.owner}"
   }
+}
+
+/*
+  main_routetable association to
+  main_subnet
+*/
+resource "aws_route_table_association" "main" {
+  subnet_id      = "${aws_subnet.main.id}"
+  route_table_id = "${aws_route_table.rtb.id}"
 }
