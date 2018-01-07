@@ -1,0 +1,2 @@
+ec2/security_groups.tf filter=git-crypt diff=git-crypt
+ec2/web_server_1.tf filter=git-crypt diff=git-crypt
