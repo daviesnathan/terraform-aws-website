@@ -12,7 +12,7 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = [
     "${aws_security_group.allow_all_out.id}",
     "${aws_security_group.allow_web_in.id}",
-    "${aws_security_group.allow_ssh_in.id}",
+    "${aws_security_group.restricted_ssh_in.id}",
   ]
 
   root_block_device = {
