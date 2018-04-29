@@ -22,6 +22,12 @@ module "cloudfront" {
   source   = "./cloudfront"
 }
 
+module "cloudfront_vatradar" {
+  dns_zone = "Z3SA0QFZGP44I6"
+  owner    = "${var.owner}"
+  source   = "./cloudfront_vatradar"
+}
+
 module "ec2" {
   deploy_key = "${var.deploy_key}"
   dns_zone   = "Z2TMUMYK9QCMW0"
